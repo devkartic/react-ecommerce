@@ -1,16 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import HeroSection from './components/HeroSection';
 import Services from './components/Services';
 import Trusted from './components/Trusted';
+import FeatureProduct from "./components/FeatureProduct";
 
 const Home = () => {
     const myData = {name: 'Thapa Store'};
     return (
         <>
-        <HeroSection myData={myData}/>
-        <Services/>
-        <Trusted/>
+            <HeroSection myData={myData}/>
+            <FeatureProduct/>
+            <Services/>
+            <Trusted/>
         </>
     );
 }

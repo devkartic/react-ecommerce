@@ -7,7 +7,7 @@ const Header = props => {
   return (
     <MainHeader>
         <NavLink to="/">
-            <img src="./images/logo.png" alt="Logo image"/> 
+            <img src="images/logo.png" alt="Logo image"/> 
         </NavLink>
         <Nav/>
     </MainHeader>

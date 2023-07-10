@@ -9,6 +9,7 @@ import FormatPrice from "./helpers/FormatPrice";
 import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
 import Star from "./components/Star";
+import AddToCart from "./components/AddToCart";
 
 const API = "https://api.pujakaitem.com/api/products";
 
@@ -57,7 +58,7 @@ const SingleProduct = () => {
             <p className="product-data-price">
               MRP:
               <del>
-                <FormatPrice price={price + 250000} />
+                <FormatPrice price={price} />
               </del>
             </p>
             <p className="product-data-price product-data-real-price">
@@ -98,6 +99,8 @@ const SingleProduct = () => {
                 Brand :<span> {company} </span>
               </p>
             </div>
+            <hr/>
+            {stock > 0 && <AddToCart product={singleProduct}/>}
           </div>
         </div>
       </Container>

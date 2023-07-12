@@ -4,7 +4,7 @@ import Product from "./Product";
 
 const FeatureProduct = () => {
     const { isLoading, featureProducts } = useProductContext();
-
+    // console.log("🚀 ~ file: FeatureProduct.js:7 ~ FeatureProduct ~ featureProducts:", featureProducts)
     if (isLoading) {
         return <div> ......Loading </div>;
     }

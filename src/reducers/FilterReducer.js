@@ -19,33 +19,28 @@ const FilterReducer = (state, action) => {
             }
         case "SORTING_PRODUCTS":
             let new_sort_products;
-            let temp_sort_products = [...action.payload];
+            const {filter_products, sorting_value} = state;
+            let temp_sort_products = [...filter_products];
 
-            if(state.sorting_value==='lowest'){
-                const sorting_products = (a, b) => {
+            const sorting_products = (a, b) => {
+                if(sorting_value==='lowest'){
                     return a.price - b.price;
                 }
-                new_sort_products = temp_sort_products.sort(sorting_products);
-            }
 
-            if(state.sorting_value==='highest'){
-                const sorting_products = (a, b) => {
+                if(sorting_value==='highest'){
                     return b.price - a.price;
                 }
-                new_sort_products = temp_sort_products.sort(sorting_products);
-            }
 
-            if(state.sorting_value==='a-z'){
-                new_sort_products = temp_sort_products.sort((a, b)=>{
+                if(sorting_value==='a-z'){
                     return a.name.localeCompare(b.name);
-                });
+                }
+
+                if(sorting_value==='z-a'){
+                    return b.name.localeCompare(a.name);
+                }
             }
 
-            if(state.sorting_value==='z-a'){
-                new_sort_products = temp_sort_products.sort((a, b)=>{
-                    return b.name.localeCompare(a.name);
-                });
-            }
+            new_sort_products = temp_sort_products.sort(sorting_products);
 
             return {...state,
                 filter_products: new_sort_products

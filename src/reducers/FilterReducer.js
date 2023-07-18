@@ -45,6 +45,27 @@ const FilterReducer = (state, action) => {
             return {...state,
                 filter_products: new_sort_products
             }
+        case "UPDATE_FILTER_VALUE":
+            const {name, value} = {...action.payload}
+            return {...state,
+                filters: {...state.filters, 
+                    [name]: value
+                },
+            }
+        case "FILTER_PRODUCTS":
+            const {all_products} = state;
+            let temp_filter_products = [...all_products]
+            const {text} = state.filters;
+
+            if(text){
+                temp_filter_products = temp_filter_products.filter((currentElement)=>{
+                    return currentElement.name.toLowerCase().includes(text);
+                })
+            }
+
+            return {...state,
+                filter_products: temp_filter_products
+            }
         default:
             return state;
     }

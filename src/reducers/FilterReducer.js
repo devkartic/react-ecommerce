@@ -55,13 +55,31 @@ const FilterReducer = (state, action) => {
         case "FILTER_PRODUCTS":
             const {all_products} = state;
             let temp_filter_products = [...all_products]
-            const {text} = state.filters;
+            const {text, category, company, color} = state.filters;
 
             if(text){
                 temp_filter_products = temp_filter_products.filter((currentElement)=>{
                     return currentElement.name.toLowerCase().includes(text);
-                })
+                });
             }
+
+            if(category.toLowerCase()!=="all"){
+                temp_filter_products = temp_filter_products.filter((currentElement)=>{
+                    return currentElement.category.toLowerCase() === category.toLowerCase();
+                });
+            }
+
+            if(company.toLowerCase()!=="all"){
+                temp_filter_products = temp_filter_products.filter((currentElement)=>{
+                    return currentElement.company.toLowerCase() === company.toLowerCase();
+                });
+            }
+
+            // if(color!=='all'){
+            //     temp_filter_products = temp_filter_products.filter((currentElement)=>{
+            //         return currentElement.color.includes(color);
+            //     });
+            // }
 
             return {...state,
                 filter_products: temp_filter_products

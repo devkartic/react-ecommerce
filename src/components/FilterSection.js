@@ -1,20 +1,117 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useFilterContext } from '../context/FilterContext';
+import { FaCheck } from "react-icons/fa";
+import {Button as button} from "./../styles/Button";
 
 const FilterSection = () => {
-  const {filters: {text}, updateFilterValue} = useFilterContext();
+
+  const {all_products, filters: {text, category, color}, updateFilterValue} = useFilterContext();
+
+  // Array Unique
+  const uniqueData = (data, property) => {
+    // Retrive array of single property from an object
+    let arrayData = data.map((currentElement)=>{
+      return currentElement[property];
+    });
+  // processing unique value array
+    if(property==='colors'){
+      return [...new Set([].concat(...arrayData))];
+    }
+
+    // processing unique value array
+    return ['All', ...new Set(arrayData)];
+  }
+
+  const categories_only = uniqueData(all_products, 'category');
+  const companies_only = uniqueData(all_products, 'company');
+  const colors_only = uniqueData(all_products, 'colors');
+  console.log("🚀 ~ file: FilterSection.js:24 ~ FilterSection ~ colors_only:", colors_only)
+
   return (
     <Wrapper>
+
       <div className="filter-search">
         <form onSubmit={(e)=>e.preventDefault()}>
           <input type="text"
           name="text"
           value={text}
           onChange={updateFilterValue}
+          placeholder="SEARCH"
           />
         </form>
       </div>
+
+      <div className="filter-category">
+        <h3>Category</h3>
+        <div>
+          {categories_only.map((currentElement, index) => {
+            return (
+              <button
+                key={index}
+                type="button"
+                name="category"
+                value={currentElement}
+                className={currentElement == category ? "active" : ""}
+                onClick={updateFilterValue}>
+                {currentElement}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="filter-company">
+        <h3>Company</h3>
+        <form action="#">
+          <select
+            name="company"
+            id="company"
+            className="filter-company--select"
+            onClick={updateFilterValue}>
+            {companies_only.map((currentElement, index) => {
+              return (
+                <option key={index} value={currentElement} name="company">
+                  {currentElement}
+                </option>
+              );
+            })}
+          </select>
+        </form>
+      </div>
+
+      <div className="filter-colors colors">
+        <h3>Colors</h3>
+        <div className="filter-color-style">
+          {colors_only.map((currentElement, index) => {
+            if (currentElement === "all") {
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  value={currentElement}
+                  name="color"
+                  className="color-all--style"
+                  onClick={updateFilterValue}>
+                  all
+                </button>
+              );
+            }
+            return (
+              <button
+                key={index}
+                type="button"
+                value={currentElement}
+                name="color"
+                style={{ backgroundColor: currentElement }}
+                className={color === currentElement ? "btnStyle active" : "btnStyle"}
+                onClick={updateFilterValue}>
+                {color === currentElement ? <FaCheck className="checkStyle" /> : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
     </Wrapper>
   )
 }

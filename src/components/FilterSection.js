@@ -16,7 +16,8 @@ const FilterSection = () => {
     });
   // processing unique value array
     if(property==='colors'){
-      return [...new Set([].concat(...arrayData))];
+      // return ['All', ...new Set([].concat(...arrayData))];
+      arrayData = arrayData.flat();
     }
 
     // processing unique value array
@@ -26,7 +27,6 @@ const FilterSection = () => {
   const categories_only = uniqueData(all_products, 'category');
   const companies_only = uniqueData(all_products, 'company');
   const colors_only = uniqueData(all_products, 'colors');
-  console.log("🚀 ~ file: FilterSection.js:24 ~ FilterSection ~ colors_only:", colors_only)
 
   return (
     <Wrapper>
@@ -83,7 +83,7 @@ const FilterSection = () => {
         <h3>Colors</h3>
         <div className="filter-color-style">
           {colors_only.map((currentElement, index) => {
-            if (currentElement === "all") {
+            if (currentElement.toLowerCase() === "all") {
               return (
                 <button
                   key={index}

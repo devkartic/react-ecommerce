@@ -75,11 +75,11 @@ const FilterReducer = (state, action) => {
                 });
             }
 
-            // if(color!=='all'){
-            //     temp_filter_products = temp_filter_products.filter((currentElement)=>{
-            //         return currentElement.color.includes(color);
-            //     });
-            // }
+            if(color.toLowerCase()!=='all'){
+                temp_filter_products = temp_filter_products.filter((currentElement)=>{
+                    return currentElement.colors.includes(color);
+                });
+            }
 
             return {...state,
                 filter_products: temp_filter_products

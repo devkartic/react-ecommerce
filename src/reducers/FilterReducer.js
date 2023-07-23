@@ -1,9 +1,12 @@
 const FilterReducer = (state, action) => {
     switch (action.type){
         case "LOAD_FILTER_PRODUCTS":
+            let priceArry = action.payload.map((currentElement)=> currentElement.price);
+            let maxPrice = Math.max(...priceArry);
             return {...state, 
                 filter_products: [...action.payload],
-                all_products: [...action.payload]
+                all_products: [...action.payload],
+                filters: {...state.filters, maxPrice, price: maxPrice}
             }
         case "SET_GRID_VIEW":
             return {...state, 
@@ -55,7 +58,7 @@ const FilterReducer = (state, action) => {
         case "FILTER_PRODUCTS":
             const {all_products} = state;
             let temp_filter_products = [...all_products]
-            const {text, category, company, color} = state.filters;
+            const {text, category, company, color, price} = state.filters;
 
             if(text){
                 temp_filter_products = temp_filter_products.filter((currentElement)=>{
@@ -81,8 +84,28 @@ const FilterReducer = (state, action) => {
                 });
             }
 
+            if(Number){
+                temp_filter_products = temp_filter_products.filter((currentElement)=>{
+                    return currentElement.price <= price;
+                });
+            }
+
             return {...state,
                 filter_products: temp_filter_products
+            }
+        case "CLEAR_FILTERS":
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    text: "",
+                    category: "all",
+                    company: "all",
+                    color: "all",
+                    maxPrice: state.filters.maxPrice,
+                    price: state.filters.maxPrice,
+                    minPrice: 0,
+                }
             }
         default:
             return state;

@@ -19,7 +19,7 @@ const CartContextProvider = ({children}) => {
     }
 
     const removeItem = (id) => {
-        console.log(id);
+        dispatch({type: 'REMOVE_FROM_CART', payload: id});
     }
 
     return (<CartContext.Provider value={{...state, addToCart, removeItem}}>

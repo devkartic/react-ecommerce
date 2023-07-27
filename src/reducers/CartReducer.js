@@ -3,7 +3,7 @@ const CartReducer = (state, action) => {
     switch(action.type){
         case "ADD_TO_CART":
             const {id, color, amount, product} = action.payload;
-            console.log("🚀 ~ file: CartReducer.js:5 ~ reducer ~ product:", product)
+            // console.log("🚀 ~ file: CartReducer.js:5 ~ reducer ~ product:", product)
 
             const cartProduct = {
                 id: id + color,
@@ -19,12 +19,16 @@ const CartReducer = (state, action) => {
             }
 
         case "REMOVE_FROM_CART":
-            console.log(action.payload);
             const updateCart = state.cart.filter((currentElement)=>{
                 return currentElement.id !== action.payload;
             })
             return { ...state,
                 cart: updateCart
+            }
+
+        case "CLEAR_CART":
+            return { ...state,
+                cart: []
             }
             
         default:

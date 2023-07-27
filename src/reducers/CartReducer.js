@@ -5,17 +5,39 @@ const CartReducer = (state, action) => {
             const {id, color, amount, product} = action.payload;
             // console.log("🚀 ~ file: CartReducer.js:5 ~ reducer ~ product:", product)
 
-            const cartProduct = {
-                id: id + color,
-                name: product.name,
-                color,
-                amount,
-                price: product.price,
-                image: product.image[0].url,
-                max: product.stock
-            }
-            return { ...state,
-                cart: [...state.cart, cartProduct]
+            // Check is exist product befor adding cart
+            const productExistInCart = state.cart.find((currentElement)=> currentElement.id === id + color);
+
+            if(productExistInCart){
+                // Update quantity if same product exist
+                const updatedCart = state.cart.map((currentElement)=>{
+                    if(currentElement.id === id + color){
+                        let newAmount = currentElement.amount + amount;
+                        // Prevent quantity amount stock limit
+                        if(newAmount > currentElement.max) newAmount = currentElement.max;
+                        return {...currentElement, amount: newAmount};
+                    } else{
+                        return currentElement;
+                    }
+                });
+
+                return { ...state,
+                    cart: updatedCart
+                }
+            }else{
+                // Adding new product in cart
+                const cartProduct = {
+                    id: id + color,
+                    name: product.name,
+                    color,
+                    amount,
+                    price: product.price,
+                    image: product.image[0].url,
+                    max: product.stock
+                }
+                return { ...state,
+                    cart: [...state.cart, cartProduct]
+                }
             }
 
         case "REMOVE_FROM_CART":

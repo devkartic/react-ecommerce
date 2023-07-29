@@ -43,6 +43,7 @@ const CartContextProvider = ({children}) => {
     }
 
     useEffect(()=>{
+        dispatch({type: "CART_TOTAL_ITEMS"})
         localStorage.setItem('thapaCart', JSON.stringify(state.cart));
     }, [state.cart]);
 

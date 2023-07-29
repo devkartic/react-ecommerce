@@ -1,6 +1,12 @@
 const CartReducer = (state, action) => {
 
     switch(action.type){
+        case "CART_TOTAL_ITEMS":
+            const totalItems = state.cart.reduce((initialValue, currentElement)=>{
+                return initialValue + currentElement.amount;
+            }, 0)
+            console.log("🚀 ~ file: CartReducer.js:8 ~ totalItems ~ totalItems:", totalItems)
+            return {...state, totalItems}
         case "ADD_TO_CART":
             const {id, color, amount, product} = action.payload;
             // console.log("🚀 ~ file: CartReducer.js:5 ~ reducer ~ product:", product)

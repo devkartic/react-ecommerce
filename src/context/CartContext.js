@@ -14,7 +14,7 @@ const initialState = {
     // cart: [],
     cart: getCartDataFromLocalStorage(),
     totalItems: 0,
-    totalAmount: 0,
+    totalPrice: 0,
     totalShipping: 50000
 }
 
@@ -43,7 +43,8 @@ const CartContextProvider = ({children}) => {
     }
 
     useEffect(()=>{
-        dispatch({type: "CART_TOTAL_ITEMS"})
+        dispatch({type: "CART_TOTAL_ITEMS"});
+        dispatch({type: "CART_TOTAL_PRICE"});
         localStorage.setItem('thapaCart', JSON.stringify(state.cart));
     }, [state.cart]);
 

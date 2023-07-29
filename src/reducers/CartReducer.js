@@ -5,8 +5,15 @@ const CartReducer = (state, action) => {
             const totalItems = state.cart.reduce((initialValue, currentElement)=>{
                 return initialValue + currentElement.amount;
             }, 0)
-            console.log("🚀 ~ file: CartReducer.js:8 ~ totalItems ~ totalItems:", totalItems)
             return {...state, totalItems}
+
+        case "CART_TOTAL_PRICE":
+            const totalPrice = state.cart.reduce((initialValue, currentElement) => {
+                let {price, amount} = currentElement;
+                return initialValue + amount * price;
+            }, 0)
+            return {...state, totalPrice}
+
         case "ADD_TO_CART":
             const {id, color, amount, product} = action.payload;
             // console.log("🚀 ~ file: CartReducer.js:5 ~ reducer ~ product:", product)

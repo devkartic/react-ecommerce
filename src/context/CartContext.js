@@ -25,6 +25,14 @@ const CartContextProvider = ({children}) => {
     const addToCart = (id, color, amount, product) => {
         dispatch({type: 'ADD_TO_CART', payload: {id, color, amount, product}});
     }
+    
+    const setIncrease = (id) => {
+        dispatch({type: 'SET_INCREASE', payload: id});
+    };
+
+    const setDecrease = (id) => {
+        dispatch({type: 'SET_DECREASE', payload: id});
+      };
 
     const removeItem = (id) => {
         dispatch({type: 'REMOVE_FROM_CART', payload: id});
@@ -38,7 +46,7 @@ const CartContextProvider = ({children}) => {
         localStorage.setItem('thapaCart', JSON.stringify(state.cart));
     }, [state.cart]);
 
-    return (<CartContext.Provider value={{...state, addToCart, removeItem, clearCart}}>
+    return (<CartContext.Provider value={{...state, addToCart, removeItem, clearCart, setIncrease, setDecrease}}>
         {children}
         </CartContext.Provider>)
 }

@@ -40,6 +40,32 @@ const CartReducer = (state, action) => {
                 }
             }
 
+        case "SET_INCREASE":
+            const increasedCart = state.cart.map((currentElement) => {
+                if(currentElement.id === action.payload){
+                    let newAmount = currentElement.amount + 1;
+                    if(newAmount > currentElement.max) newAmount = currentElement.max;
+                    return {...currentElement, amount: newAmount}
+                }
+
+                return currentElement;
+            });
+
+            return {...state, cart: increasedCart};
+
+        case "SET_DECREASE":
+            const decreasedCart = state.cart.map((currentElement) => {
+                if(currentElement.id === action.payload){
+                    let newAmount = currentElement.amount - 1;
+                    if(newAmount<1)  newAmount = 1;
+                    return {...currentElement, amount: newAmount}
+                }
+
+                return currentElement;
+            });
+
+            return {...state, cart: decreasedCart};
+
         case "REMOVE_FROM_CART":
             const updateCart = state.cart.filter((currentElement)=>{
                 return currentElement.id !== action.payload;

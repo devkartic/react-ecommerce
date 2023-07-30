@@ -1,7 +1,9 @@
 const CartReducer = (state, action) => {
 
     switch(action.type){
-        case "CART_TOTAL_ITEMS":
+
+        // Individually Handle total Items and Price
+        /*case "CART_TOTAL_ITEMS":
             const totalItems = state.cart.reduce((initialValue, currentElement)=>{
                 return initialValue + currentElement.amount;
             }, 0)
@@ -12,7 +14,17 @@ const CartReducer = (state, action) => {
                 let {price, amount} = currentElement;
                 return initialValue + amount * price;
             }, 0)
-            return {...state, totalPrice}
+            return {...state, totalPrice}*/
+
+        // Reduce Coding to Handle total Items and Price
+        case "CART_TOTAL_ITEMS_PRICE":
+            const {totalItems, totalPrice} = state.cart.reduce((accumulator, currentElement)=>{
+                let {price, amount} = currentElement;
+                accumulator.totalItems += amount;
+                accumulator.totalPrice += amount * price;
+                return accumulator;
+            }, {totalItems: 0, totalPrice: 0});
+            return {...state, totalItems, totalPrice}
 
         case "ADD_TO_CART":
             const {id, color, amount, product} = action.payload;
